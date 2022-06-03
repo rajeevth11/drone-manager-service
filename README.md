@@ -15,6 +15,7 @@
 
 ## Test the project
 Use the postman to test the project
-![alt text](https://drive.google.com/file/d/17gnP7Ss52QU0QChLILEQ2mrx2HEIgztp/view?usp=sharing)
+![image](https://user-images.githubusercontent.com/106370202/171945775-8702bbf5-7ccb-44e0-9f82-288cf799311d.png)
+
 ### Docmentation
 https://documenter.getpostman.com/view/15029798/Uz5GoGMq
