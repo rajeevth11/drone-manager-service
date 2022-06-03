@@ -15,6 +15,6 @@
 
 ## Test the project
 Use the postman to test the project
-![This is an image]([http://url/to/img.png](https://drive.google.com/file/d/17gnP7Ss52QU0QChLILEQ2mrx2HEIgztp/view?usp=sharing))
+![alt text](https://drive.google.com/file/d/17gnP7Ss52QU0QChLILEQ2mrx2HEIgztp/view?usp=sharing))
 ### Docmentation
 https://documenter.getpostman.com/view/15029798/Uz5GoGMq
