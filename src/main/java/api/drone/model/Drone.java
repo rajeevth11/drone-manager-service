@@ -1,7 +1,9 @@
 package api.drone.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,6 +22,8 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name = "drone")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Drone {
@@ -41,4 +45,13 @@ public class Drone {
     Set<Medication> medications;
 
 
+    public Drone( String serialNumber, String model, double weightLimit, double batteryCapacity, String state, String username )
+    {
+        this.serialNumber = serialNumber;
+        this.model = model;
+        this.weightLimit = weightLimit;
+        this.batteryCapacity = batteryCapacity;
+        this.state = state;
+        this.username = username;
+    }
 }

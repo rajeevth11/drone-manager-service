@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
 @Table(name = "medication")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties({"drone"})
@@ -37,4 +38,13 @@ public class Medication
     @JsonIgnore
     private Drone drone;
 
+    public Medication( String code, String name, double weight, String image, String username, Drone drone )
+    {
+        this.code = code;
+        this.name = name;
+        this.weight = weight;
+        this.image = image;
+        this.username = username;
+        this.drone = drone;
+    }
 }

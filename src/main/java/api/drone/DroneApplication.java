@@ -1,3 +1,5 @@
+package api.drone;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
@@ -9,9 +11,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan (basePackages = { "api.drone"})
-@EnableJpaRepositories(basePackages = {"api.drone.repository"})
-@EntityScan( basePackages = {"api.drone.model"})
+//@ComponentScan (basePackages = { "api.drone"})
+//@EnableJpaRepositories(basePackages = {"api.drone.repository"})
+//@EntityScan( basePackages = {"api.drone.model"})
 
 public class DroneApplication
 {
