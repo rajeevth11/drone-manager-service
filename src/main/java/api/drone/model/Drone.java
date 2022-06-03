@@ -1,5 +1,6 @@
 package api.drone.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,12 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @Table (name = "drone")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Drone {
     @Column (name = "serial_number")
     @Id
@@ -35,7 +38,7 @@ public class Drone {
     private Timestamp lastModified;
     @OneToMany(mappedBy = "drone", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    List<Medication> medications;
+    Set<Medication> medications;
 
 
 }

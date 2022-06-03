@@ -6,11 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface DroneRepository extends JpaRepository<Drone, String>
 {
 
-    @Query(value = "select * from drone where sate =:stateCode", nativeQuery = true)
-    void findByStatus( @Param("stateCode") String state );
+    @Query(value = "select * from drone where state =:stateCode", nativeQuery = true)
+    List<Drone> findByStatus( @Param("stateCode") String state );
 
 }

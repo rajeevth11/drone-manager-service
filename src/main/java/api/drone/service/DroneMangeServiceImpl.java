@@ -28,8 +28,8 @@ public class DroneMangeServiceImpl implements DroneMangeService
     /**
      * Register a drone.
      *
-     * @param drone
-     * @return
+     * @param drone - Drone object
+     * @return Registered drone.
      */
     @Override
     public ResponseEntity<ResponseWrapper<Drone>> registerDrone( Drone drone )
@@ -69,7 +69,7 @@ public class DroneMangeServiceImpl implements DroneMangeService
         List<Drone> droneList = null;
         if( state != null )
         {
-            droneRepository.findByStatus( state );
+            droneList = droneRepository.findByStatus( state );
         }
         else
         {
@@ -77,8 +77,8 @@ public class DroneMangeServiceImpl implements DroneMangeService
         }
 
         return droneList != null && droneList.size() > 0 ?
-        new ResponseEntity<ResponseWrapper<List<Drone>>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Drone loaded successfully.", droneList ), HttpStatus.OK ):
-        new ResponseEntity<ResponseWrapper<List<Drone>>>( new ResponseWrapper( ResponseWrapper.ERROR, "No results found." ), HttpStatus.NOT_FOUND );
+                new ResponseEntity<ResponseWrapper<List<Drone>>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Drone loaded successfully.", droneList ), HttpStatus.OK ) :
+                new ResponseEntity<ResponseWrapper<List<Drone>>>( new ResponseWrapper( ResponseWrapper.WARNING, "No results found." ), HttpStatus.NOT_FOUND );
 
     }
 
@@ -91,8 +91,8 @@ public class DroneMangeServiceImpl implements DroneMangeService
     @Override public ResponseEntity<ResponseWrapper<Drone>> findDroneById( String serialNumber )
     {
         Optional<Drone> returnDrone = droneRepository.findById( serialNumber );
-        return returnDrone.isPresent() ? new ResponseEntity<ResponseWrapper<Drone>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Results loaded successfully.", returnDrone.get()  ), HttpStatus.OK ):
-                new ResponseEntity<ResponseWrapper<Drone>>( new ResponseWrapper( ResponseWrapper.ERROR, "No results found." ), HttpStatus.NOT_FOUND );
+        return returnDrone.isPresent() ? new ResponseEntity<ResponseWrapper<Drone>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Results loaded successfully.", returnDrone.get() ), HttpStatus.OK ) :
+                new ResponseEntity<ResponseWrapper<Drone>>( new ResponseWrapper( ResponseWrapper.WARNING, "No results found." ), HttpStatus.NOT_FOUND );
 
     }
 
@@ -108,37 +108,37 @@ public class DroneMangeServiceImpl implements DroneMangeService
                 Drone droneObject = returnDrone.get();
                 if( ( medicationRepository.findById( medication.getCode() ).isPresent() ) )
                 {
-                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Medication found with the same code."), HttpStatus.BAD_REQUEST );
+                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Medication found with the same code." ), HttpStatus.BAD_REQUEST );
                 }
-                else if( droneObject.getWeightLimit() > medication.getWeight() )
+                else if( droneObject.getWeightLimit() < medication.getWeight() )
                 {
-                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Medication weight exceeds."), HttpStatus.BAD_REQUEST );
+                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Medication weight exceeds." ), HttpStatus.BAD_REQUEST );
                 }
                 else if( droneObject.getBatteryCapacity() < 0.25 )
                 {
-                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Battery capacity not enough."), HttpStatus.BAD_REQUEST );
+                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Battery capacity not enough." ), HttpStatus.BAD_REQUEST );
                 }
                 else
                 {
-                    droneObject.getMedications().add( medication );
+                    //droneObject.getMedications().add( medication );
                     droneObject.setState( State.LOADING.toString() );
                     droneRepository.save( droneObject );
-                    //medication.setDrone( droneObject );
-                    // medicationRepository.save( medication );
+                    medication.setDrone( droneObject );
+                    medicationRepository.save( medication );
                     Medication returnMedication = medicationRepository.findById( medication.getCode() ).get();
-                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Successfully created.", returnMedication), HttpStatus.CREATED );
+                    medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Successfully created.", returnMedication ), HttpStatus.CREATED );
                 }
             }
             else
             {
                 //invalid serial no
-                medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Invalid serial number."), HttpStatus.INTERNAL_SERVER_ERROR );
+                medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Invalid serial number." ), HttpStatus.INTERNAL_SERVER_ERROR );
 
             }
         }
         catch( Exception e )
         {
-            medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Error while processing ."+ e.getMessage() ), HttpStatus.INTERNAL_SERVER_ERROR );
+            medicationResponseEntity = new ResponseEntity<ResponseWrapper<Medication>>( new ResponseWrapper( ResponseWrapper.ERROR, "Error while processing ." + e.getMessage() ), HttpStatus.INTERNAL_SERVER_ERROR );
         }
         return medicationResponseEntity;
     }
@@ -146,8 +146,8 @@ public class DroneMangeServiceImpl implements DroneMangeService
     @Override public ResponseEntity<ResponseWrapper<List<Medication>>> getMedicationByDrone( String serialNumber )
     {
         Optional<List<Medication>> returnMedications = medicationRepository.findBySerialNumber( serialNumber );
-        return returnMedications.isPresent() ? new ResponseEntity<ResponseWrapper<List<Medication>>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Results loaded successfully.", returnMedications.get()  ), HttpStatus.OK ):
-                new ResponseEntity<ResponseWrapper<List<Medication>>>( new ResponseWrapper( ResponseWrapper.ERROR, "No results found." ), HttpStatus.NOT_FOUND );
+        return returnMedications.isPresent() ? new ResponseEntity<ResponseWrapper<List<Medication>>>( new ResponseWrapper( ResponseWrapper.SUCCESS, "Results loaded successfully.", returnMedications.get() ), HttpStatus.OK ) :
+                new ResponseEntity<ResponseWrapper<List<Medication>>>( new ResponseWrapper( ResponseWrapper.WARNING, "No results found." ), HttpStatus.NOT_FOUND );
 
     }
 

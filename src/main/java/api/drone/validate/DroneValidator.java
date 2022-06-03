@@ -45,10 +45,10 @@ public class DroneValidator
         {
             return new ValidateResponse( false, "Weight limit max value(500) exceeds." );
         }
-//        if( drone.getBatteryCapacity() == null )
-//        {
-//            return new ValidateResponse( false, "Mandatory parameter Battery capacity missing" );
-//        }
+        //        if( drone.getBatteryCapacity() == null )
+        //        {
+        //            return new ValidateResponse( false, "Mandatory parameter Battery capacity missing" );
+        //        }
         if( drone.getUsername() == null )
         {
             return new ValidateResponse( false, "Mandatory parameter username missing." );
@@ -59,7 +59,7 @@ public class DroneValidator
 
     public static ValidateResponse validateState( String state )
     {
-        if( state!= null && State.valueOf( state ) != null )
+        if( !( state == null || State.valueOf( state ) != null ) )
         {
             return new ValidateResponse( false, "Invalid State" );
         }

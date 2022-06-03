@@ -1,6 +1,9 @@
 package api.drone.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +19,10 @@ import java.sql.Timestamp;
 @ToString
 @Entity
 @Table(name = "medication")
-public class Medication {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties({"drone"})
+public class Medication
+{
     @Id
     String code;
     String name;
@@ -24,10 +30,11 @@ public class Medication {
     String image;
     @Column(name = "modified_user")
     String username;
-    @Column (name = "last_modified")
+    @Column(name = "last_modified")
     Timestamp lastModified;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "serial_number", nullable = false)
+    @JoinColumn(name = "serial_num", referencedColumnName = "serial_number", nullable = false)
+    @JsonIgnore
     private Drone drone;
 
 }

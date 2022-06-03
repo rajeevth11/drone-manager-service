@@ -29,6 +29,12 @@ public class DroneController
     @Autowired
     private DroneMangeService droneMangeService;
 
+    /**
+     * Register drone (Persist drone into the DB)
+     * @param username
+     * @param drone
+     * @return
+     */
     @RequestMapping(method = {RequestMethod.POST}, value = "/drones", produces = "application/json")
     public ResponseEntity<ResponseWrapper<Drone>> registerDrone( @RequestHeader("username") String username, @RequestBody(required = true) DroneDTO drone )
     {
@@ -45,22 +51,35 @@ public class DroneController
         }
     }
 
-    @RequestMapping(method = {RequestMethod.POST}, value = "/drones{serialNumber}/medication", produces = "application/json")
+    /**
+     * Load medication into the drone.
+     *
+     * @param username
+     * @param serialNumber
+     * @param medication
+     * @return
+     */
+    @RequestMapping(method = {RequestMethod.POST}, value = "/drones/{serialNumber}/medication", produces = "application/json")
     public ResponseEntity<ResponseWrapper<Medication>> loadMedication( @RequestHeader("username") String username, @PathVariable String serialNumber, @RequestBody(required = true) MedicationDTO medication )
     {
         medication.setUsername( username );
-        if( DroneValidator.validateMedication( medication ).isValid() )
+        ValidateResponse validateResponse = DroneValidator.validateMedication( medication );
+        if( validateResponse.isValid() )
         {
             return droneMangeService.loadMedication( serialNumber, CriteriaMapper.INSTANCE.mapMedication( medication ) );
         }
         else
         {
-            return new ResponseEntity( HttpStatus.BAD_REQUEST );
-            //return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error Message");
+            return new ResponseEntity( new ResponseWrapper<Medication>( ResponseWrapper.ERROR, validateResponse.getErrorMessage() ), HttpStatus.BAD_REQUEST );
         }
     }
 
-    @RequestMapping(method = {RequestMethod.GET}, value = "/drones{serialNumber}/medication", produces = "application/json")
+    /**
+     * Load medication by serial number
+     * @param serialNumber
+     * @return
+     */
+    @RequestMapping(method = {RequestMethod.GET}, value = "/drones/{serialNumber}/medication", produces = "application/json")
     public ResponseEntity<ResponseWrapper<List<Medication>>> getMedicationByDrone( @PathVariable String serialNumber )
     {
         return droneMangeService.getMedicationByDrone( serialNumber );
@@ -91,7 +110,7 @@ public class DroneController
      * @param serialNumber of type String
      * @return Drone object
      */
-    @RequestMapping(method = {RequestMethod.GET}, value = "/drones{serialNumber}", produces = "application/json")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/drones/{serialNumber}", produces = "application/json")
     public ResponseEntity<ResponseWrapper<Drone>> retrieveDrone( @PathVariable String serialNumber )
     {
         return droneMangeService.findDroneById(serialNumber);

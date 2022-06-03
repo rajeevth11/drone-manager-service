@@ -38,6 +38,7 @@ public class ResponseWrapper<T>
 
     public static final String SUCCESS = "Success";
     public static final String ERROR = "Error";
+    public static final String WARNING = "Warning";
     private String status;
     private String message;
     protected List<T> data;

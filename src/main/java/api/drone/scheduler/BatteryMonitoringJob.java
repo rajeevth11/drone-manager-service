@@ -6,8 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +20,7 @@ public class BatteryMonitoringJob
     private DroneRepository droneRepository;
 
     //@Async
-    @Scheduled(fixedRate = 10000 )
+    @Scheduled(fixedRate = 1000000 )
     public void batteryMonitor()
     {
         SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss.SSS" );

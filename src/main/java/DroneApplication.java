@@ -18,7 +18,7 @@ public class DroneApplication
     final static Logger logger = Logger.getLogger( DroneApplication.class );
     public static void main(String[] args)
     {
-        logger.log( Level.ERROR, "<<<<<<<<<<<<<<<<<<<<Starting Application>>>>>>>>>>>>>>>>>>>" );
+        logger.log( Level.INFO, "<<<<<<<<<<<<<<<<<<<<Starting Application>>>>>>>>>>>>>>>>>>>" );
         SpringApplication.run(DroneApplication.class, args);
     }
 }
