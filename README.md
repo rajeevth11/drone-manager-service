@@ -8,10 +8,10 @@
 
 ## Build the Project
 - Clone the project from https://github.com/rajeevth11/drone-manager-service.git
-- Apply the src/main/resources/db_script/drone_manger.sql into your mysql database.
-- Set the src/main/resources/application.properties with your DB configuratons.
-- Build the maven project using mvn install
-- Start the project using mvn spring-boot:run 
+- Apply the **src/main/resources/db_script/drone_manger.sql** into your mysql database.
+- Set the **src/main/resources/application.properties** with your DB configuratons.
+- Build the maven project using `mvn install`
+- Start the project using mvn `spring-boot:run`
 
 ## Test the project
 Use the postman to test the project
