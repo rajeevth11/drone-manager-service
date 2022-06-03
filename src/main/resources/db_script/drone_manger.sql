@@ -17,13 +17,13 @@ CREATE TABLE `drone` (
 CREATE TABLE `medication` (
   `code` varchar(50) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `weight` decimal(3,2) NOT NULL,
-  `image` varchar(500) NOT NULL,
-  `serial_number` varchar(100) NOT NULL,
+  `weight` double NOT NULL,
+  `image` varchar(500) DEFAULT NULL,
+  `serial_num` varchar(100) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modified_user` varchar(100) NOT NULL,
   PRIMARY KEY (`code`),
-  KEY `fk_drone_serial_num_idx` (`serial_number`),
-  CONSTRAINT `fk_drone_serial_num` FOREIGN KEY (`serial_number`) REFERENCES `drone` (`serial_number`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_drone_serial_num_idx` (`serial_num`),
+  CONSTRAINT `fk_drone_serial_num` FOREIGN KEY (`serial_num`) REFERENCES `drone` (`serial_number`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Details of the medication entity'$$
 
