@@ -27,3 +27,15 @@ CREATE TABLE `medication` (
   CONSTRAINT `fk_drone_serial_num` FOREIGN KEY (`serial_num`) REFERENCES `drone` (`serial_number`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Details of the medication entity'$$
 
+
+INSERT INTO `drone_manager`.`drone` (`serial_number`, `model`, `weight_limit`, `battery_capacity`, `state`, `modified_user`) VALUES ('12344', 'Lightweight', '100', '100', 'LOADING', 'rajeev');
+INSERT INTO `drone_manager`.`drone` (`serial_number`, `model`, `weight_limit`, `battery_capacity`, `state`, `modified_user`) VALUES ('12345', 'Middleweight', '500', '80', 'IDLE', 'rajeev');
+INSERT INTO `drone_manager`.`drone` (`serial_number`, `model`, `weight_limit`, `battery_capacity`, `state`, `modified_user`) VALUES ('12346', 'Cruiserweight', '500', '75', 'IDLE', 'rajeev');
+INSERT INTO `drone_manager`.`drone` (`serial_number`, `model`, `weight_limit`, `battery_capacity`, `state`, `modified_user`) VALUES ('12347', 'Middleweight', '500', '30', 'IDLE', 'rajeev');
+INSERT INTO `drone_manager`.`drone` (`serial_number`, `model`, `weight_limit`, `battery_capacity`, `state`, `modified_user`) VALUES ('12348', 'Cruiserweight', '500', '100', 'IDLE', 'rajeev');
+
+INSERT INTO `drone_manager`.`medication` (`code`, `name`, `weight`, `serial_num`, `modified_user`) VALUES ('MED_001', 'med_new', '80', '12344', 'rajeev');
+INSERT INTO `drone_manager`.`medication` (`code`, `name`, `weight`, `serial_num`, `modified_user`) VALUES ('MED_002', 'med_new_test', '80', '12344', 'rajeev');
+INSERT INTO `drone_manager`.`medication` (`code`, `name`, `weight`, `serial_num`, `modified_user`) VALUES ('MED_003', 'my_med', '80', '12348', 'rajeev');
+
+COMMIT;
